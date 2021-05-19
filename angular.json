@@ -1,0 +1,166 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "89756a08-a447-45f3-be99-6464d3cabf74",
+    "defaultCollection": "@angular-eslint/schematics"
+  },
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "spa1": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/spa1",
+      "sourceRoot": "projects/spa1/src",
+      "prefix": "spa",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/spa1",
+            "index": "projects/spa1/src/index.html",
+            "main": "projects/spa1/src/main.ts",
+            "polyfills": "projects/spa1/src/polyfills.ts",
+            "tsConfig": "projects/spa1/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/spa1/src/favicon.ico",
+              "projects/spa1/src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/spa1/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/spa1/src/environments/environment.ts",
+                  "with": "projects/spa1/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "spa1:build:production"
+            },
+            "development": {
+              "browserTarget": "spa1:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "spa1:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/spa1/src/test.ts",
+            "polyfills": "projects/spa1/src/polyfills.ts",
+            "tsConfig": "projects/spa1/tsconfig.spec.json",
+            "karmaConfig": "projects/spa1/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/spa1/src/favicon.ico",
+              "projects/spa1/src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/spa1/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/spa1/**/*.ts",
+              "projects/spa1/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "non-functional": {
+      "projectType": "library",
+      "root": "projects/non-functional",
+      "sourceRoot": "projects/non-functional/src",
+      "prefix": "nf",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/non-functional/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/non-functional/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/non-functional/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/non-functional/src/test.ts",
+            "tsConfig": "projects/non-functional/tsconfig.spec.json",
+            "karmaConfig": "projects/non-functional/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/non-functional/**/*.ts",
+              "projects/non-functional/**/*.html"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "spa1"
+}
